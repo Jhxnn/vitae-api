@@ -19,7 +19,7 @@ public class Cv {
 
     private double grade;
 
-    private String content;
+    private String url;
 
     public UUID getCvId() {
         return cvId;
@@ -45,11 +45,11 @@ public class Cv {
         this.grade = grade;
     }
 
-    public String getContent() {
-        return content;
+    public String getUrl() {
+        return url;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
