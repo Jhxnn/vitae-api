@@ -1,4 +1,4 @@
 package com.vitae_api.dtos;
 
-public class UserDto {
+public record UserDto (String name, String email){
 }

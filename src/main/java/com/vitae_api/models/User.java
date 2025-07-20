@@ -18,7 +18,6 @@ public class User {
 
     private String email;
 
-
     public UUID getUserId() {
         return userId;
     }
