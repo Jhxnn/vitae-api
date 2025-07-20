@@ -2,6 +2,7 @@ package com.vitae_api.services;
 
 
 import com.vitae_api.dtos.UserDto;
+import com.vitae_api.exceptions.ConflictException;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.UserRepository;
 import org.apache.catalina.UserDatabase;
@@ -21,10 +22,10 @@ public class UserService {
     UserRepository userRepository;
 
 
-    public User createUser(UserDto userDto) throws BadRequestException {
+    public User createUser(UserDto userDto) {
         User user = new User();
         if(userRepository.existsByEmail(userDto.email())){
-            throw new BadRequestException("This email already exists");
+            throw new ConflictException("This email already exists");
         }
         BeanUtils.copyProperties(userDto, user);
         return userRepository.save(user);
