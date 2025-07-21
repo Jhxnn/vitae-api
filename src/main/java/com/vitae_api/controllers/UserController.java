@@ -23,9 +23,13 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<User> findAll(){
+    public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
+
+
+
+
 
 
 }
