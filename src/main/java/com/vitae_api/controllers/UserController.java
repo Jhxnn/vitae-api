@@ -1,6 +1,7 @@
 package com.vitae_api.controllers;
 
 
+import com.vitae_api.dtos.UserDto;
 import com.vitae_api.models.User;
 import com.vitae_api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findByid(@PathVariable(name = "id")UUID id){
+    public ResponseEntity<User> findById(@PathVariable(name = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody UserDto userDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
     }
 
 
