@@ -5,10 +5,14 @@ import com.vitae_api.dtos.CvDto;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.CvRepository;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class CvService {
@@ -29,9 +33,13 @@ public class CvService {
         return cvRepository.save(cv);
     }
 
-    public String cvToString(MultipartFile cv){
-
+    public String cvToString(MultipartFile file) throws IOException {
+        try (PDDocument document = PDDocument.load(file.getInputStream())) {
+            PDFTextStripper stripper = new PDFTextStripper();
+            return stripper.getText(document);
+        }
     }
+
 
 
 }
