@@ -1,6 +1,7 @@
 package com.vitae_api.services;
 
 
+import com.vitae_api.dtos.ChatResponseDto;
 import com.vitae_api.dtos.CvDto;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
@@ -33,12 +34,21 @@ public class CvService {
         return cvRepository.save(cv);
     }
 
-    public String cvToString(MultipartFile file) throws IOException {
+    public String cvToString(MultipartFile file){
         try (PDDocument document = PDDocument.load(file.getInputStream())) {
             PDFTextStripper stripper = new PDFTextStripper();
             return stripper.getText(document);
         }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
+
+    public ChatResponseDto.ChoiceDto chatResponse(MultipartFile file) {
+        String pdfContent = cvToString(file);
+    }
+
+
 
 
 
