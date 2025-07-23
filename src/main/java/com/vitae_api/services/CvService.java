@@ -8,6 +8,7 @@ import com.vitae_api.repositories.CvRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CvService {
@@ -26,6 +27,10 @@ public class CvService {
         User user = userService.findById(cvDto.userId());
         cv.setUser(user);
         return cvRepository.save(cv);
+    }
+
+    public String cvToString(MultipartFile cv){
+
     }
 
 
