@@ -19,7 +19,27 @@ public class Cv {
 
     private double grade;
 
-    private String url;
+    private String geminiResponse;
+
+
+
+
+    public Cv(User user, double grade, String geminiResponse) {
+        this.user = user;
+        this.grade = grade;
+        this.geminiResponse = geminiResponse;
+    }
+
+    public Cv() {
+    }
+
+    public String getGeminiResponse() {
+        return geminiResponse;
+    }
+
+    public void setGeminiResponse(String geminiResponse) {
+        this.geminiResponse = geminiResponse;
+    }
 
     public UUID getCvId() {
         return cvId;
@@ -45,11 +65,5 @@ public class Cv {
         this.grade = grade;
     }
 
-    public String getUrl() {
-        return url;
-    }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

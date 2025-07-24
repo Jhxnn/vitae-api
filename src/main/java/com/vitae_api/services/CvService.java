@@ -2,6 +2,7 @@ package com.vitae_api.services;
 
 
 import com.vitae_api.dtos.CvDto;
+import com.vitae_api.dtos.GeminiCvDto;
 import com.vitae_api.dtos.GeminiResponse;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
@@ -12,6 +13,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CvService {
@@ -23,14 +29,10 @@ public class CvService {
     @Autowired
     CvRepository cvRepository;
 
+    @Autowired
+    GeminiService geminiService;
 
-    public Cv createCv(CvDto cvDto){
-        Cv cv = new Cv();
-        BeanUtils.copyProperties(cvDto, cv);
-        User user = userService.findById(cvDto.userId());
-        cv.setUser(user);
-        return cvRepository.save(cv);
-    }
+
 
     public String cvToString(MultipartFile file){
         try (PDDocument document = PDDocument.load(file.getInputStream())) {
@@ -42,8 +44,40 @@ public class CvService {
         }
     }
 
-    public GeminiResponse.Candidate chatResponse(MultipartFile file) {
+    public String generateEvaluationPrompt(String cv) {
+        return """
+        Avalie o seguinte currículo:
+
+        %s
+
+        Gere uma nota de 0 a 10 com até uma casa decimal, e explique brevemente a razão da nota.
+        Responda no seguinte formato:
+        Nota: <valor>
+        Justificativa: <explicação>
+        """.formatted(cv);
+    }
+
+    public GeminiCvDto getRevision(String response) {
+        Pattern padrao = Pattern.compile("Nota:\\s*(\\d+(\\.\\d+)?)\\s*Justificativa:\\s*(.*)", Pattern.DOTALL);
+        Matcher matcher = padrao.matcher(response);
+
+        if (matcher.find()) {
+            double nota = Double.parseDouble(matcher.group(1));
+            String justify = matcher.group(3).trim();
+            return new GeminiCvDto(nota, justify);
+        }
+
+        throw new IllegalArgumentException("Formato da resposta do Gemini inválido.");
+    }
+
+
+    public Cv chatResponse(MultipartFile file, UUID userId) {
         String pdfContent = cvToString(file);
+        User user = userService.findById(userId);
+        String prompt = generateEvaluationPrompt(pdfContent);
+        GeminiCvDto geminiCvDto =  getRevision(geminiService.generateText(prompt).block());
+        Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
+        return cvRepository.save(cv);
     }
 
 
