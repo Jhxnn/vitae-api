@@ -23,7 +23,7 @@ public class GeminiService {
                 .build();
     }
 
-    public Mono<String> gerarTexto(String prompt) {
+    public Mono<String> generateText(String prompt) {
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(
                         Map.of("role", "user", "parts", List.of(Map.of("text", prompt)))
