@@ -1,6 +1,7 @@
 package com.vitae_api.controllers;
 
 
+import com.vitae_api.dtos.GeminiResponse;
 import com.vitae_api.services.CvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class CvController {
     CvService cvService;
 
     @PostMapping
-    public ResponseEntity<ChatResponseDto.ChoiceDto> cvResponse(@RequestParam("file") MultipartFile file){
+    public ResponseEntity<GeminiResponse.Candidate> cvResponse(@RequestParam("file") MultipartFile file){
         return ResponseEntity.noContent().build();
     }
 }

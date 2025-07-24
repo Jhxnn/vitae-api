@@ -2,6 +2,7 @@ package com.vitae_api.services;
 
 
 import com.vitae_api.dtos.CvDto;
+import com.vitae_api.dtos.GeminiResponse;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.CvRepository;
@@ -41,7 +42,7 @@ public class CvService {
         }
     }
 
-    public ChatResponseDto.ChoiceDto chatResponse(MultipartFile file) {
+    public GeminiResponse.Candidate chatResponse(MultipartFile file) {
         String pdfContent = cvToString(file);
     }
 
