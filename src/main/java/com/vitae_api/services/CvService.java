@@ -1,7 +1,6 @@
 package com.vitae_api.services;
 
 
-import com.vitae_api.dtos.ChatResponseDto;
 import com.vitae_api.dtos.CvDto;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
@@ -12,8 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Service
 public class CvService {

@@ -1,10 +1,8 @@
 package com.vitae_api.controllers;
 
 
-import com.vitae_api.dtos.ChatResponseDto;
 import com.vitae_api.services.CvService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
