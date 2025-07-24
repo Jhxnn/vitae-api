@@ -1,6 +1,7 @@
 package com.vitae_api.controllers;
 
 
+import com.vitae_api.dtos.LoginDto;
 import com.vitae_api.dtos.UserDto;
 import com.vitae_api.models.User;
 import com.vitae_api.services.UserService;
@@ -25,6 +26,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<User> login(@RequestBody LoginDto loginDto){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.login(loginDto));
     }
 
     @GetMapping("/{id}")
