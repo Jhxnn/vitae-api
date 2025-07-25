@@ -3,6 +3,8 @@ package com.vitae_api.controllers;
 
 import com.vitae_api.models.Cv;
 import com.vitae_api.services.CvService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,8 @@ public class CvController {
     CvService cvService;
 
 
-
+    @Operation(summary = "Avaliar um Curriculo e Salvar no banco")
+    @ApiResponse(responseCode = "201", description = "Curriculo avaliado e salvo com sucesso")
     @PostMapping
     public ResponseEntity<Cv> cvResponse(@RequestParam("file") MultipartFile file, @RequestParam("userId")UUID userId){
         return ResponseEntity.status(HttpStatus.CREATED).body(cvService.chatResponse(file, userId));
