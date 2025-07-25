@@ -75,7 +75,7 @@ public class CvService {
         String pdfContent = cvToString(file);
         User user = userService.findById(userId);
         String prompt = generateEvaluationPrompt(pdfContent);
-        GeminiCvDto geminiCvDto =  getRevision(geminiService.generateText(prompt).block());
+        GeminiCvDto geminiCvDto = getRevision(geminiService.generateText(prompt).block());
         Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
         return cvRepository.save(cv);
     }
