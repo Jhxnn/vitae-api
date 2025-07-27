@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,9 @@ public class CvService {
             throw new RuntimeException(e);
         }
     }
-
+    public List<Cv> listBigGrade(){
+        return cvRepository.findCvWithHighestGrade();
+    }
     public String generateEvaluationPrompt(String cv) {
         return """
         Avalie o seguinte currículo:
