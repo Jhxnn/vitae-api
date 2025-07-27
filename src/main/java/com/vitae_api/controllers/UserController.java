@@ -36,7 +36,7 @@ public class UserController {
     @Operation(summary = "Logar um Usuario")
     @ApiResponse(responseCode = "200", description = "Usuario logado com sucesso")
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<User> login(@RequestBody UserDto loginDto){
         return ResponseEntity.status(HttpStatus.OK).body(userService.login(loginDto));
     }
 

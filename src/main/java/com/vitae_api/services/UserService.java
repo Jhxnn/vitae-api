@@ -28,7 +28,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User login(LoginDto loginDto){
+    public User login(UserDto loginDto){
         if(userRepository.existsByEmail(loginDto.email()) && userRepository.existsByName(loginDto.name())){
             return userRepository.findByEmail(loginDto.email());
         }
