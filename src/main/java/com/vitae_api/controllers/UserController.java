@@ -4,6 +4,7 @@ package com.vitae_api.controllers;
 import com.vitae_api.dtos.LoginDto;
 import com.vitae_api.dtos.UserDto;
 import com.vitae_api.models.User;
+import com.vitae_api.services.CvService;
 import com.vitae_api.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,12 +27,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @Operation(summary = "Listar todos os Usuarios")
     @ApiResponse(responseCode = "200", description = "Usuarios listados com sucesso")
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
+
+
 
     @Operation(summary = "Logar um Usuario")
     @ApiResponse(responseCode = "200", description = "Usuario logado com sucesso")
