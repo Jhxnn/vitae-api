@@ -1,19 +1,13 @@
 package com.vitae_api.services;
-
-
-import com.vitae_api.dtos.CvDto;
 import com.vitae_api.dtos.GeminiCvDto;
-import com.vitae_api.dtos.GeminiResponse;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.CvRepository;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -31,8 +25,6 @@ public class CvService {
 
     @Autowired
     GeminiService geminiService;
-
-
 
     public String cvToString(MultipartFile file){
         try (PDDocument document = PDDocument.load(file.getInputStream())) {
@@ -70,7 +62,6 @@ public class CvService {
         throw new IllegalArgumentException("Formato da resposta do Gemini inválido.");
     }
 
-
     public Cv chatResponse(MultipartFile file, UUID userId) {
         String pdfContent = cvToString(file);
         User user = userService.findById(userId);
@@ -79,9 +70,5 @@ public class CvService {
         Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
         return cvRepository.save(cv);
     }
-
-
-
-
 
 }

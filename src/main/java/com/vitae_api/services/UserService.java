@@ -1,16 +1,12 @@
 package com.vitae_api.services;
-
-
 import com.vitae_api.dtos.LoginDto;
 import com.vitae_api.dtos.UserDto;
 import com.vitae_api.exceptions.BadRequestException;
 import com.vitae_api.exceptions.ConflictException;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.UserRepository;
-import org.apache.catalina.UserDatabase;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

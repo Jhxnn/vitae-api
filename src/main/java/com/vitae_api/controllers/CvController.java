@@ -22,12 +22,10 @@ import java.util.UUID;
 @Tag(name = "Curriculos", description = "Gerenciamento dos Curriculos")
 public class CvController {
 
-
     @Autowired
     CvService cvService;
 
-
-    @Operation(summary = "Avaliar um Curriculo e Salvar no banco")
+    @Operation(summary = "Avaliar um Curriculo e salvar no banco")
     @ApiResponse(responseCode = "201", description = "Curriculo avaliado e salvo com sucesso")
     @PostMapping
     public ResponseEntity<Cv> cvResponse(@RequestParam("file") MultipartFile file, @RequestParam("userId")UUID userId){
