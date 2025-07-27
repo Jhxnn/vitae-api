@@ -1,23 +1,28 @@
 package com.vitae_api.services;
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class GeminiService {
 
-    private final WebClient webClient;
+    private WebClient webClient;
 
     @Value("${gemini.api.key}")
     private String apiKey;
 
-    public GeminiService() {
+    @PostConstruct
+    public void initWebClient() {
         this.webClient = WebClient.builder()
-                .baseUrl("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent")
-                .defaultHeader("Content-Type", "application/json")
+                .baseUrl("https://generativelanguage.googleapis.com")
+                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
@@ -29,7 +34,10 @@ public class GeminiService {
         );
 
         return webClient.post()
-                .uri(uriBuilder -> uriBuilder.queryParam("key", this.apiKey).build())
+                .uri(uriBuilder -> uriBuilder
+                        .path("/v1/models/gemini-1.5-flash:generateContent")
+                        .queryParam("key", apiKey)
+                        .build())
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(Map.class)
