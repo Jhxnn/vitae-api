@@ -31,4 +31,11 @@ public class CvController {
     public ResponseEntity<Cv> cvResponse(@RequestParam("file") MultipartFile file, @RequestParam("userId")UUID userId){
         return ResponseEntity.status(HttpStatus.CREATED).body(cvService.chatResponse(file, userId));
     }
+
+    @Operation(summary = "Gerar texto a partir de um PDF")
+    @ApiResponse(responseCode = "201", description = "Texto gerado com sucesso")
+    @PostMapping
+    public ResponseEntity<String> cvToString(@RequestParam("file") MultipartFile file){
+        return ResponseEntity.status(HttpStatus.CREATED).body(cvService.cvToString(file));
+    }
 }
