@@ -42,7 +42,7 @@ public class CvService {
 
         %s
 
-        Gere uma nota de 0 a 10 com até uma casa decimal, e explique brevemente a razão da nota.
+        Gere uma nota de 0 a 10 com até uma casa decimal, e explique com no maximo 200 caracteres a razão da nota.
         Responda no seguinte formato:
         Nota: <valor>
         Justificativa: <explicação>
