@@ -2,6 +2,7 @@ package com.vitae_api.models;
 
 import jakarta.persistence.*;
 
+import java.sql.Blob;
 import java.util.UUID;
 
 @Entity
@@ -19,10 +20,21 @@ public class Cv {
 
     private double grade;
 
+    @Lob
+    @Column(name = "file")
+    private byte[] file;
+
+
     private String geminiResponse;
 
 
+    public byte[] getFile() {
+        return file;
+    }
 
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
 
     public Cv(User user, double grade, String geminiResponse) {
         this.user = user;
@@ -64,6 +76,5 @@ public class Cv {
     public void setGrade(double grade) {
         this.grade = grade;
     }
-
 
 }
