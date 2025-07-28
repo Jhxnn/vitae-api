@@ -67,12 +67,12 @@ public class CvService {
     }
 
     public Cv chatResponse(MultipartFile file, UUID userId) {
-        String pdfContent = cvToString(file);
         User user = userService.findById(userId);
         List<Cv> cvs = cvRepository.findByUser(user);
         if(cvs.size() > 2){
            throw new BadRequestException("Quantidade máxima de curriculos por usuario atingida!");
         }
+        String pdfContent = cvToString(file);
         String prompt = generateEvaluationPrompt(pdfContent);
         GeminiCvDto geminiCvDto = getRevision(geminiService.generateText(prompt).block());
         Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
