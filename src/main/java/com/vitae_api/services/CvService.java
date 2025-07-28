@@ -1,5 +1,6 @@
 package com.vitae_api.services;
 import com.vitae_api.dtos.GeminiCvDto;
+import com.vitae_api.exceptions.BadRequestException;
 import com.vitae_api.models.Cv;
 import com.vitae_api.models.User;
 import com.vitae_api.repositories.CvRepository;
@@ -68,10 +69,29 @@ public class CvService {
     public Cv chatResponse(MultipartFile file, UUID userId) {
         String pdfContent = cvToString(file);
         User user = userService.findById(userId);
+        List<Cv> cvs = cvRepository.findByUser(user);
+        if(cvs.size() > 2){
+           throw new BadRequestException("Quantidade máxima de curriculos por usuario atingida!");
+        }
         String prompt = generateEvaluationPrompt(pdfContent);
         GeminiCvDto geminiCvDto = getRevision(geminiService.generateText(prompt).block());
         Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
         return cvRepository.save(cv);
+    }
+
+    public Cv findById(UUID id){
+        Cv cv = cvRepository.findById(id).orElseThrow(() -> new RuntimeException("cannot be found"));
+        return cv;
+    }
+
+    public void deleteCv(UUID id){
+        Cv cv = findById(id);
+        cvRepository.delete(cv);
+    }
+    public List<Cv> userCvs(UUID id){
+        User user = userService.findById(id);
+        List<Cv> cvs = cvRepository.findByUser(user);
+        return cvs;
     }
 
 }

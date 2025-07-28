@@ -1,6 +1,7 @@
 package com.vitae_api.repositories;
 
 import com.vitae_api.models.Cv;
+import com.vitae_api.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,5 +17,7 @@ public interface CvRepository extends JpaRepository<Cv, UUID> {
     )
 """)
     List<Cv> findCvWithHighestGrade();
+
+    List<Cv> findByUser(User user);
 
 }
