@@ -52,4 +52,11 @@ public class CvController {
     public ResponseEntity<List<Cv>> findByUser(@PathVariable(name = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(cvService.userCvs(id));
     }
+
+    @Operation(summary = "Deletar Curriculo")
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Cv>> deleteCv(@PathVariable(name = "id")UUID id){
+        cvService.deleteCv(id);
+        return ResponseEntity.noContent().build();
+    }
 }
