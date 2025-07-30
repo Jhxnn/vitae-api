@@ -54,7 +54,7 @@ public class CvController {
     }
 
     @Operation(summary = "Deletar Curriculo")
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<List<Cv>> deleteCv(@PathVariable(name = "id")UUID id){
         cvService.deleteCv(id);
         return ResponseEntity.noContent().build();
