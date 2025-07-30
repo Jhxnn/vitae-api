@@ -76,12 +76,6 @@ public class CvService {
         String prompt = generateEvaluationPrompt(pdfContent);
         GeminiCvDto geminiCvDto = getRevision(geminiService.generateText(prompt).block());
         Cv cv = new Cv(user, geminiCvDto.grade(), geminiCvDto.justify());
-        try {
-            cv.setFile(file.getBytes());
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
         return cvRepository.save(cv);
     }
 

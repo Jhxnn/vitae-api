@@ -20,22 +20,9 @@ public class Cv {
 
     private double grade;
 
-    @Lob
-    @Column(name = "file", columnDefinition = "BYTEA")
-    private byte[] file;
-
-
 
     private String geminiResponse;
 
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     public Cv(User user, double grade, String geminiResponse) {
         this.user = user;
