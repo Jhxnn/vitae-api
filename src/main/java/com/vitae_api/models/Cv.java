@@ -21,8 +21,9 @@ public class Cv {
     private double grade;
 
     @Lob
-    @Column(name = "file")
+    @Column(name = "file", columnDefinition = "BYTEA")
     private byte[] file;
+
 
 
     private String geminiResponse;
