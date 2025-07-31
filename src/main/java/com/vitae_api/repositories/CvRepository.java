@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface CvRepository extends JpaRepository<Cv, UUID> {
 
     @Query(value = """
-    SELECT DISTINCT ON (c.user_id) *
-    FROM Cv c
-    ORDER BY c.user_id, c.grade DESC
+  SELECT DISTINCT ON (c.user_id) *
+  FROM cvs c
+  ORDER BY c.user_id, c.grade DESC
 """, nativeQuery = true)
     List<Cv> findCvWithHighestGrade();
 
